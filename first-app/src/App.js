@@ -1,36 +1,47 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
+import NavigaitonMenu from "./components/NavigaitonMenu";
 import TextForm from "./components/TextForm";
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import Alert from "./components/Alert";
 function App() {
-  const [mode, setMode] = useState({
-    bgColor: 'light',
-    fontColor: 'dark', 
-    color: 'black'
-  })
+  const darkMode = {
+    bgColor: "light",
+    fontColor: "dark",
+  };
+  const lightMode = {
+    bgColor: "dark",
+    fontColor: "light",
+  };
 
-  const toggleMode = () =>{
-    if(mode.bgColor === 'dark'){
-      setMode({
-        bgColor: 'light',
-        fontColor: 'dark', 
-        color: 'black'
-      })
-      document.body.style.backgroundColor = 'white';
+  const [mode, setMode] = useState(darkMode);
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (type, message) => {
+    setAlert({
+      message: message,
+      type: type
+    });
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  };
+
+  const toggleMode = () => {
+    if (mode.bgColor === "dark") {
+      setMode(darkMode);
+      document.body.style.backgroundColor = "white";
     } else {
-      setMode({
-        bgColor: 'dark',
-        fontColor: 'light', 
-        color: 'white'
-      })
-      document.body.style.backgroundColor = 'black';
+      setMode(lightMode);
+      document.body.style.backgroundColor = "black";
     }
-  }
+  };
   return (
     <>
-      <Navbar title="TextUtils" bgTheme={mode.bgColor} fontTheme={mode.fontColor} toggleMode={toggleMode}/>
-      <div className="container my-3" >
-      <TextForm heading = "Enter Your Text" bgTheme={mode.bgColor} fontTheme={mode.fontColor} colorTheme = {mode.color} toggleMode={toggleMode}/>
+      <NavigaitonMenu title="TextUtils" mode={mode} toggleMode={toggleMode} />
+     {/* <Test/> */}
+      <Alert alert={alert} />
+      <div className="container my-3">
+        <TextForm heading="Enter Your Text" mode={mode} showAlert={showAlert} />
       </div>
     </>
   );
