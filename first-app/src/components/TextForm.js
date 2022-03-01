@@ -20,9 +20,9 @@ export default function TextForm({ heading, mode, showAlert }) {
     navigator.clipboard.writeText(text);
     showAlert("success", "Text coppied to clipboard.");
   };
-  const removeSpaces = () => {
-    setText(text.split(/[ ]+/).join(" "));
-    showAlert("success", "Extra spaces removed.");
+  const textPrettier = () => {
+    setText(text.split(/\s+/).join(" "));
+    showAlert("success", "Extra spaces & lines removed.");
   };
   const clrTxt = () => {
     setText("");
@@ -55,35 +55,44 @@ export default function TextForm({ heading, mode, showAlert }) {
         </Row>
 
         <Row>
-          <Col >
+          <Col>
             {/* UpperCase */}
-            <Button className="me-2 my-1" onClick={convertToUpper}>
+            <Button
+              className="me-2 my-1"
+              onClick={convertToUpper}
+              disabled={text.length === 0}
+            >
               Convert to Uppercase
             </Button>
             {/* Lowercase */}
-            <Button className=" me-2 my-1" onClick={convertToLower}>
+            <Button className=" me-2 my-1" onClick={convertToLower} disabled={text.length === 0}>
               Convert to Lowercase
             </Button>
             {/* Lowercase */}
-            <Button className=" me-2 my-1" onClick={removeSpaces}>
-              Remove Extra-Spaces
+            <Button className=" me-2 my-1" onClick={textPrettier} disabled={text.length === 0}>
+              Prettier Text
             </Button>
             {/* CopyTExt */}
-            <Button className=" me-2 my-1 " onClick={copyText}>
+            <Button className=" me-2 my-1 " onClick={copyText} disabled={text.length === 0}>
               Copy Text
             </Button>
           </Col>
-          <Col xl = "1" xs ="1">
+          <Col xl="1" xs="1">
             {/* Clear Text */}
-            <Button variant="danger" className="me-2 my-1 float-end" onClick={clrTxt}>
+            <Button
+              variant="danger"
+              className="me-2 my-1 float-end"
+              onClick={clrTxt}
+              disabled={text.length === 0}
+            >
               Clear
             </Button>
           </Col>
         </Row>
-        <Row  className={` my-3 text-${mode.fontColor}`}>
+        <Row className={` my-3 text-${mode.fontColor}`}>
           <h1>Text Summary</h1>
           <p>
-            <b>{text.split(" ").filter((e) => e.length !== 0).length}</b> Words
+            <b>{text.split(/\s+/).filter((e) => e.length !== 0).length}</b> Words
             | <b>{text.length}</b> characters
           </p>
         </Row>

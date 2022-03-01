@@ -10,7 +10,7 @@ export default function NavigaitonMenu({ title, mode, toggleMode }) {
         expand="lg"
         className={`navbar navbar-expand-lg navbar-${mode.bgColor} bg-${mode.bgColor}`}
       >
-        <Container>
+        <Container fluid>
           <Navbar.Brand href="#home">{title}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
