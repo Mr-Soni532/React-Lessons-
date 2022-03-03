@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import React, { Component } from "react";
 import NavBar from "./component/NavBar";
 import News from "./component/News";
@@ -17,7 +17,6 @@ export default class App extends Component {
             <div className="headline">
               <News />
             </div>
-
             {/*! -----| Side News |------- */}
             <div className="sideNews">
             {/*! -----| Sports Highlights |------- */}

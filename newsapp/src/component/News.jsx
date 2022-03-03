@@ -2,51 +2,51 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Button } from "react-bootstrap";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 export default class News extends Component {
   constructor() {
     super();
     this.state = {
       articles: this.articles,
       loading: true,
-      page: this.page=1,
+      page: (this.page = 1),
+      totalResults: this.totalResults,
+      key: "ccd8db0a67664546bbd0af28ef964eab",
     };
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${this.state.key}&pageSize=10`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({ articles: parsedData.articles, loading: false });
   }
 
   handleNextClick = async () => {
-    if(this.state.page + 1  > Math.ceil(this.state.totalResults/10)) return ;
-    
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10&page=${
-      this.state.page + 1
-    }`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+      this.state.key
+    }&pageSize=10&page=${this.state.page + 1}`;
     let data = await fetch(url);
     let parsedData = await data.json();
-   
     this.setState({
       articles: parsedData.articles,
       page: this.state.page + 1,
+      totalResults: parsedData.totalResults,
     });
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   };
 
   handlePreClick = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10&page=${
-      this.state.page - 1
-    }`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+      this.state.key
+    }&pageSize=10&page=${this.state.page - 1}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
     });
-    window.scrollTo(0,0)
-
+    window.scrollTo(0, 0);
   };
   render() {
     return (
@@ -70,7 +70,7 @@ export default class News extends Component {
           }}
         >
           {this.state.loading
-            ? "Loading..."
+            ? <Spinner SpinnerColor="danger"/>
             : this.state.articles.map((element) => {
                 return (
                   <div key={element.url}>
@@ -100,7 +100,16 @@ export default class News extends Component {
           >
             &larr; Previous
           </Button>
-          <Button variant="dark" size="lg" onClick={this.handleNextClick}>
+          <Button
+            variant="dark"
+            size="lg"
+            onClick={this.handleNextClick}
+            style={
+              this.state.page === Math.ceil(this.state.totalResults / 10)
+                ? { visibility: "hidden" }
+                : { visibility: "visible" }
+            }
+          >
             Next &rarr;
           </Button>
         </Col>
