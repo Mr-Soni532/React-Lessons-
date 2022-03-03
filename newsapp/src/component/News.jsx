@@ -1,0 +1,110 @@
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Row, Col, Button } from "react-bootstrap";
+import NewsItem from "./NewsItem";
+export default class News extends Component {
+  constructor() {
+    super();
+    this.state = {
+      articles: this.articles,
+      loading: true,
+      page: this.page=1,
+    };
+  }
+
+  async componentDidMount() {
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({ articles: parsedData.articles, loading: false });
+  }
+
+  handleNextClick = async () => {
+    if(this.state.page + 1  > Math.ceil(this.state.totalResults/10)) return ;
+    
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10&page=${
+      this.state.page + 1
+    }`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+   
+    this.setState({
+      articles: parsedData.articles,
+      page: this.state.page + 1,
+    });
+    window.scrollTo(0,0)
+  };
+
+  handlePreClick = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=76d958c675464bf1a6d761378a3013f5&pageSize=10&page=${
+      this.state.page - 1
+    }`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page - 1,
+      articles: parsedData.articles,
+    });
+    window.scrollTo(0,0)
+
+  };
+  render() {
+    return (
+      <>
+        <Row style={{ borderBottom: "2px solid black", marginLeft: "1.8px" }}>
+          <h1 className=" fw-bold d-flex align-items-center p-0">
+            News@Hub{" "}
+            <span className="badge bg-danger fs-5 mt-2 ms-2">
+              Top Headlines
+            </span>
+          </h1>
+        </Row>
+        <Row
+          className="d-flex "
+          style={{
+            overflow: "scroll",
+            overflowX: "hidden",
+            maxHeight: "1200px",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          {this.state.loading
+            ? "Loading..."
+            : this.state.articles.map((element) => {
+                return (
+                  <div key={element.url}>
+                    <NewsItem
+                      title={element.title}
+                      description={element.description}
+                      imageUrl={element.urlToImage}
+                      newsUrl={element.url}
+                    />
+                  </div>
+                );
+              })}
+        </Row>
+        <Col
+          className="d-flex justify-content-between mb-5"
+          style={{ borderTop: "2px solid black", paddingTop: "40px" }}
+        >
+          <Button
+            variant="dark"
+            size="lg"
+            onClick={this.handlePreClick}
+            style={
+              this.state.page <= 1
+                ? { visibility: "hidden" }
+                : { visibility: "visible" }
+            }
+          >
+            &larr; Previous
+          </Button>
+          <Button variant="dark" size="lg" onClick={this.handleNextClick}>
+            Next &rarr;
+          </Button>
+        </Col>
+      </>
+    );
+  }
+}
