@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row } from "react-bootstrap";
 import SportsItem from "./SportsItem";
+import LoadingSpinner from "./LoadingSpinner";
+
+
 
 export default class Sports extends Component {
   constructor() {
@@ -29,6 +32,7 @@ export default class Sports extends Component {
 
         <Row
           className="d-flex "
+          id="sports_container"
           style={{
             overflow: "scroll",
             overflowX: "hidden",
@@ -36,9 +40,9 @@ export default class Sports extends Component {
             
           }}
         >
-          {this.state.loading
-            ? "Loading..."
-            : this.state.articles.map((element) => {
+          {this.state.loading ? (
+            <LoadingSpinner type="side"/>
+          ) : this.state.articles.map((element) => {
                 return (
                   <div key={element.url}>
                     <SportsItem

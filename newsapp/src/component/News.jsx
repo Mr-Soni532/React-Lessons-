@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Button } from "react-bootstrap";
 import NewsItem from "./NewsItem";
-import Spinner from "./Spinner";
+import LoadingSpinner from "./LoadingSpinner";
 export default class News extends Component {
   constructor() {
-    super();
+    super();  
     this.state = {
       articles: this.articles,
       loading: true,
@@ -23,30 +23,36 @@ export default class News extends Component {
   }
 
   handleNextClick = async () => {
+    window.scrollTo(0, 0);
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
       this.state.key
     }&pageSize=10&page=${this.state.page + 1}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
+
     this.setState({
       articles: parsedData.articles,
       page: this.state.page + 1,
       totalResults: parsedData.totalResults,
+      loading: false,
     });
-    window.scrollTo(0, 0);
   };
 
   handlePreClick = async () => {
+    window.scrollTo(0, 0);
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
       this.state.key
     }&pageSize=10&page=${this.state.page - 1}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
+
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
+      loading: false,
     });
-    window.scrollTo(0, 0);
   };
   render() {
     return (
@@ -61,28 +67,31 @@ export default class News extends Component {
         </Row>
         <Row
           className="d-flex "
+          id="news_Container"
           style={{
-            overflow: "scroll",
-            overflowX: "hidden",
+            overflowY: "scroll",
             maxHeight: "1200px",
             marginTop: "20px",
             marginBottom: "20px",
+            minHeight: "500px",
           }}
         >
-          {this.state.loading
-            ? <Spinner SpinnerColor="danger"/>
-            : this.state.articles.map((element) => {
-                return (
-                  <div key={element.url}>
-                    <NewsItem
-                      title={element.title}
-                      description={element.description}
-                      imageUrl={element.urlToImage}
-                      newsUrl={element.url}
-                    />
-                  </div>
-                );
-              })}
+          {this.state.loading ? (
+            <LoadingSpinner type="main"/>
+          ) : (
+            this.state.articles.map((element) => {
+              return (
+                <div key={element.url}>
+                  <NewsItem
+                    title={element.title}
+                    description={element.description}
+                    imageUrl={element.urlToImage}
+                    newsUrl={element.url}
+                  />
+                </div>
+              );
+            })
+          )}
         </Row>
         <Col
           className="d-flex justify-content-between mb-5"
