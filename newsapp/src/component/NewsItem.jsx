@@ -5,7 +5,8 @@ import { Card, Button } from "react-bootstrap";
 
 export default class NewsItem extends Component {
   render() {
-    let { title, description, imageUrl, newsUrl } = this.props;
+    let { title, description, imageUrl, newsUrl, author, date } = this.props;
+    
     return (
       <>
         <Card style={{ width: "100%" }} className="mx-auto my-3">
@@ -15,9 +16,14 @@ export default class NewsItem extends Component {
             <Card.Text style={{ color: "rgba(0,0,0,0.6)" }}>
               {description ? description.slice(0) : ""}
             </Card.Text>
-            <Button variant="secondary" href={newsUrl} className="float-end">
-              Read More
-            </Button>
+            <div >
+              <small className=" fs-6 text-muted">
+                Published by <span  className="text-dark">{author? author: "Unknown"}</span> on <span className="text-dark">{new Date(date).toGMTString()}</span>
+              </small>
+              <Button variant="secondary" href={newsUrl} className="float-end ">
+                Read More
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       </>

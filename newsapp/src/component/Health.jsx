@@ -11,12 +11,11 @@ export default class Sports extends Component {
     this.state = {
       articles: this.articles,
       loading: true,
-      key: "ccd8db0a67664546bbd0af28ef964eab",
     };
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=${this.state.key}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=business&apiKey=${this.props.apiKey}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({ articles: parsedData.articles, loading: false });

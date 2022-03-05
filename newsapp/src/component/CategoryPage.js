@@ -1,14 +1,10 @@
+
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
 import NewsItem from "./NewsItem";
 import LoadingSpinner from "./LoadingSpinner";
 export default class News extends Component {
-
-  // static defaultProps  = {
-  //   country: 'in',
-  //   category: 'genreal'
-  // }
 
   constructor() {
     super();  
@@ -17,7 +13,6 @@ export default class News extends Component {
       loading: true,
       page: (this.page = 1),
       totalResults: this.totalResults,
-  
     };
   }
 
@@ -30,8 +25,7 @@ export default class News extends Component {
 
   handleNextClick = async () => {
     window.scrollTo(0, 0);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=10&page=
-    ${this.state.page + 1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=10&page=${this.state.page + 1}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -46,9 +40,7 @@ export default class News extends Component {
 
   handlePreClick = async () => {
     window.scrollTo(0, 0);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${
-      this.state.key
-    }&pageSize=10&page=${this.state.page - 1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=10&page=${this.state.page - 1}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -61,8 +53,8 @@ export default class News extends Component {
   };
   render() {
     return (
-      <>
-        <Row style={{ borderBottom: "2px solid black", marginLeft: "1.8px" }}>
+      <Container>
+         <Row style={{ borderBottom: "2px solid black", marginLeft: "1.8px" }}>
           <h1 className=" fw-bold d-flex align-items-center p-0">
             News@Hub{" "}
             <span className="badge bg-danger fs-5 mt-2 ms-2">
@@ -92,8 +84,6 @@ export default class News extends Component {
                     description={element.description}
                     imageUrl={element.urlToImage}
                     newsUrl={element.url}
-                    author={element.author}
-                    date={element.publishedAt}
                   />
                 </div>
               );
@@ -108,10 +98,7 @@ export default class News extends Component {
             variant="dark"
             size="lg"
             onClick={this.handlePreClick}
-            style={
-              this.state.page <= 1
-                ? { visibility: "hidden" }
-                : { visibility: "visible" }
+            style={this.state.page <= 1 ? { visibility: "hidden" }: { visibility: "visible" }
             }
           >
             &larr; Previous
@@ -121,15 +108,15 @@ export default class News extends Component {
             size="lg"
             onClick={this.handleNextClick}
             style={
-              this.state.page === Math.ceil(this.state.totalResults / 10)
-                ? { visibility: "hidden" }
-                : { visibility: "visible" }
+              this.state.page === Math.ceil(this.state.totalResults / 10)? { visibility: "hidden" } : { visibility: "visible" }
             }
           >
             Next &rarr;
           </Button>
         </Col>
-      </>
+      </Container>
+       
+   
     );
   }
 }

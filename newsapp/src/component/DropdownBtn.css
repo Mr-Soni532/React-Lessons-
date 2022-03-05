@@ -86,10 +86,10 @@
   transform: scale(0.75) translateY(0px);
 }
 .option-active {
-  font-weight: bold;
+  background: rgba(0, 0, 0, 1);
 }
 .option:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 1);
 }
 .option {
   width: 100%;

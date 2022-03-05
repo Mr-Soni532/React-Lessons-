@@ -7,51 +7,40 @@ export default function DropdownBtn({ type }) {
   const [change, setText] = useState({
     text: type === "Country" ? "United States" : type,
   });
-
+ 
   const showItemCountry = (e) => {
     document.getElementById("dropList_Country").classList.toggle("list-active");
-    document
-      .getElementById("dropdown_icon")
-      .classList.toggle("dropdown_icon_is-active");
-    };
-    const showItemCatrgory = (e) => {
-      document
-      .getElementById("dropList_Category")
-      .classList.toggle("list-active");
-      document
-        .getElementById("dropdown_icon_category")
-        .classList.toggle("dropdown_icon_is-active");
+    document.getElementById("dropdown_icon").classList.toggle("dropdown_icon_is-active");
+  };
+
+  const showItemCatrgory = (e) => {
+      document.getElementById("dropList_Category").classList.toggle("list-active");
+      document.getElementById("dropdown_icon_category").classList.toggle("dropdown_icon_is-active");
   };
 
   const handleClickCountry = (e) => {
+  
     let CountryCode = e.target.textContent;
     setText({ text: CountryCode });
 
     e.target.parentNode.querySelector(".option-active") &&
-      e.target.parentNode
-        .querySelector(".option-active")
-        .classList.remove("option-active");
+    e.target.parentNode.querySelector(".option-active").classList.remove("option-active");
+
     e.target.classList.add("option-active");
     e.target.parentNode.classList.remove("list-active");
-    document
-    .getElementById("dropdown_icon")
-    .classList.remove("dropdown_icon_is-active");   
+    document.getElementById("dropdown_icon").classList.remove("dropdown_icon_is-active");   
 
   };
   const handleClickCatrgory = (e) => {
-    let CountryCode = e.target.textContent;
-    setText({ text: CountryCode });
+    let Category = e.target.textContent;
+    setText({ text: Category });
 
     e.target.parentNode.querySelector(".option-active") &&
-      e.target.parentNode
-        .querySelector(".option-active")
-        .classList.remove("option-active");
+    e.target.parentNode.querySelector(".option-active").classList.remove("option-active");
 
     e.target.classList.add("option-active");
     e.target.parentNode.classList.remove("list-active");
-    document
-    .getElementById("dropdown_icon_category")
-    .classList.remove("dropdown_icon_is-active");
+    document.getElementById("dropdown_icon_category").classList.remove("dropdown_icon_is-active");
   };
 
   return (
