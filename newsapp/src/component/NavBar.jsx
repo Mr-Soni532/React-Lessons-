@@ -9,7 +9,7 @@ export default class NavBar extends Component {
     return ( 
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand to="/">News@Hub</Navbar.Brand>
+        <LinkContainer to="/"><Navbar.Brand>News@Hub</Navbar.Brand></LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav style={{width: "50%", alignItems: "center"}}>

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import NewsItem from "./NewsItem";
+import CategoryPageItem from "./CategoryPageItems";
 import LoadingSpinner from "./LoadingSpinner";
 export default class News extends Component {
 
@@ -17,7 +17,7 @@ export default class News extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=10`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=15`;
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({ articles: parsedData.articles, loading: false });
@@ -25,7 +25,7 @@ export default class News extends Component {
 
   handleNextClick = async () => {
     window.scrollTo(0, 0);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=10&page=${this.state.page + 1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=15&page=${this.state.page + 1}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -40,7 +40,7 @@ export default class News extends Component {
 
   handlePreClick = async () => {
     window.scrollTo(0, 0);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=10&page=${this.state.page - 1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.key}&pageSize=15&page=${this.state.page - 1}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -52,25 +52,25 @@ export default class News extends Component {
     });
   };
   render() {
+    
     return (
       <Container>
-         <Row style={{ borderBottom: "2px solid black", marginLeft: "1.8px" }}>
-          <h1 className=" fw-bold d-flex align-items-center p-0">
-            News@Hub{" "}
-            <span className="badge bg-danger fs-5 mt-2 ms-2">
-              Top Headlines
+         <Row style={{ borderBottom: "2px solid rgba(0,0,0,0.3)", marginLeft: "1.8px", marginTop: "30px" }}>
+          <h1 className="d-flex align-items-center p-0 pb-2" style={{fontWeight: "600"}}>
+            News<span className="text-muted">@</span>Hub {" "}
+            <span className="badge bg-primary" style={{fontSize: "20px", margin: " 0 10px", letterSpacing: "1.3px", fontWeight: "600"}}>
+              {this.props.category.toUpperCase()}
             </span>
+      
           </h1>
         </Row>
-        <Row
-          className="d-flex "
+        <div
+          className="d-flex flex-wrap justify-content-between"
           id="news_Container"
           style={{
-            overflowY: "scroll",
-            maxHeight: "1200px",
             marginTop: "20px",
             marginBottom: "20px",
-            minHeight: "500px",
+
           }}
         >
           {this.state.loading ? (
@@ -78,21 +78,22 @@ export default class News extends Component {
           ) : (
             this.state.articles.map((element) => {
               return (
-                <div key={element.url}>
-                  <NewsItem
+                <div key={element.url} style={{maxWidth: "32%"}}>
+                  <CategoryPageItem
                     title={element.title}
                     description={element.description}
                     imageUrl={element.urlToImage}
                     newsUrl={element.url}
+                    date={element.publishedAt}
                   />
                 </div>
               );
             })
           )}
-        </Row>
+        </div>
         <Col
           className="d-flex justify-content-between mb-5"
-          style={{ borderTop: "2px solid black", paddingTop: "40px" }}
+          style={{ borderTop: "2px solid black", paddingTop: "30px" }}
         >
           <Button
             variant="dark"
