@@ -11,12 +11,12 @@ export default class Home extends Component {
      let {country, apiKey} = this.props;
     return (
      <>
-         <Container className="mt-4 ">
+         <Container>
           <div className="news-container">
             <div className="headline">
            <News country={country} category="general" apiKey={apiKey}/>
             </div>
-            <div className="sideNews">
+            <div className="sideNews" style={{position: "sticky", right: "100px",top: "-700px", maxHeight: "1px"}}>
               <Sports country={country} apiKey={apiKey} />
               <Health country={country} apiKey={apiKey} />
             </div>

@@ -10,14 +10,13 @@ export default class LoadingSpinner extends Component {
           className="d-flex justify-content-center align-items-center"
           style={{ width: "100%" }}
         >
-          <Spinner animation="grow" variant="primary" />
-          <Spinner animation="grow" variant="secondary" />
-          <Spinner animation="grow" variant="success" />
-          <Spinner animation="grow" variant="danger" />
-          <Spinner animation="grow" variant="warning" />
-          <Spinner animation="grow" variant="info" />
-          <Spinner animation="grow" variant="success" />
-          <Spinner animation="grow" variant="dark" />
+         
+          <Spinner animation="grow" variant="danger" className="p-200"/>
+
+          <Spinner animation="grow" variant="warning" className="p-200" />
+          
+          <Spinner animation="grow" variant="info" className="p-200" />
+     
         </div>
         ):(<div
           className="d-flex justify-content-center align-items-center"
