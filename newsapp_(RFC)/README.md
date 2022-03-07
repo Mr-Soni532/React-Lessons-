@@ -1,1 +1,1 @@
-This news app is build using class base componenets for learning purposes only.
+Remaking newsapp using function based componenets.
