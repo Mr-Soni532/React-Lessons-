@@ -20,6 +20,7 @@ export default function Health(props) {
 
   useEffect(() => {
     updateNews();
+   //eslint-disable-next-line
    }, [])
    
     return (

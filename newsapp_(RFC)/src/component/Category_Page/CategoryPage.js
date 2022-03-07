@@ -30,6 +30,7 @@ export default function CategoryPage(props) {
 
   useEffect(() => {
     updateNews();
+   //eslint-disable-next-line
    }, [])
 
     const fetchMoreData = async () => {

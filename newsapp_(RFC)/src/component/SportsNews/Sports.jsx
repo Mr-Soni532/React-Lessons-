@@ -21,6 +21,7 @@ export default function Sports(props) {
   
   useEffect(() => {
       updateNews();
+   //eslint-disable-next-line
   }, [])
      
 

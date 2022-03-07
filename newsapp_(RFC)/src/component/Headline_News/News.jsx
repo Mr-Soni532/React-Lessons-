@@ -29,6 +29,7 @@ export default function News(props) {
 
   useEffect(() => {
    updateNews();
+   //eslint-disable-next-line
   }, [])
   
   const fetchMoreData = async () => {
