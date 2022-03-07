@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import defaultImg from "../assets/defaultImg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Button } from "react-bootstrap";
 
-export default class NewsItem extends Component {
-  render() {
-    let { title, description, imageUrl, newsUrl, author, date } = this.props;
+export default function NewsItem(props)  {
+    let { title, description, imageUrl, newsUrl, author, date } = props;
     
     return (
       <>
@@ -29,4 +28,5 @@ export default class NewsItem extends Component {
       </>
     );
   }
-}
+
+

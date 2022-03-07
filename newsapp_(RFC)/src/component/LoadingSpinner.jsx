@@ -2,7 +2,6 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
 export default function LoadingSpinner(props) {
-  console.log(props.type)
     return (
      <>
         {props.type === "main"? (
