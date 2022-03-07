@@ -1,22 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Spinner } from "react-bootstrap";
-export default class LoadingSpinner extends Component {
-  render() {
+export default function LoadingSpinner(props) {
+  console.log(props.type)
     return (
      <>
-        {this.props.type === "main"? (
+        {props.type === "main"? (
           <div
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-center mt-5"
           style={{ width: "100%" }}
         >
-         
-          <Spinner animation="grow" variant="danger" className="p-200"/>
-
-          <Spinner animation="grow" variant="warning" className="p-200" />
-          
-          <Spinner animation="grow" variant="info" className="p-200" />
-     
+          <Spinner animation="grow" variant="danger" />
+          <Spinner animation="grow" variant="warning" className="ms-2 me-2"/>
+          <Spinner animation="grow" variant="info" />
         </div>
         ):(<div
           className="d-flex justify-content-center align-items-center"
@@ -24,8 +20,7 @@ export default class LoadingSpinner extends Component {
         >
           <Spinner animation="border" variant="dark" />
         </div>)}
-        
-     </>
+      </>
     );
   }
-}
+
