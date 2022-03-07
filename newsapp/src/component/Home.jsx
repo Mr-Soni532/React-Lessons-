@@ -8,13 +8,13 @@ import Health from "./Health";
 
 export default class Home extends Component {
   render() {
-     let {country, apiKey} = this.props;
+     let {country, apiKey, setProgress} = this.props;
     return (
      <>
          <Container>
           <div className="news-container">
             <div className="headline">
-           <News country={country} category="general" apiKey={apiKey}/>
+           <News country={country} category="general" apiKey={apiKey} setProgress={setProgress}/>
             </div>
             <div className="sideNews" style={{position: "sticky", right: "100px",top: "-700px", maxHeight: "1px"}}>
               <Sports country={country} apiKey={apiKey} />

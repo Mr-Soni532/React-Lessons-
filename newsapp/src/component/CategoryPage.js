@@ -1,10 +1,10 @@
 
 import React, { Component } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import "bootstrap/dist/css/bootstrap.min.css";
+import InfiniteScroll from "react-infinite-scroll-component"; 
+import "bootstrap/dist/css/bootstrap.min.css";  
 import { Row, Container } from "react-bootstrap";
 import CategoryPageItem from "./CategoryPageItems";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "./LoadingSpinner"; 
 export default class News extends Component {
 
   constructor() {
@@ -18,16 +18,20 @@ export default class News extends Component {
   }
 
   async updateNews(){
+    this.props.setProgress(20);
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=12&page=
     ${this.state.page}`;
     this.setState({loading: true})
     let data = await fetch(url);
+    this.props.setProgress(40);
     let parsedData = await data.json();
     this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false  });
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {
     this.updateNews();
+
   }
 
   fetchMoreData = async () => {
@@ -55,13 +59,13 @@ export default class News extends Component {
         {!this.state.loading ?
           ( 
             <InfiniteScroll
-          dataLength={this.state.articles.length}
+          dataLength={this.state.articles.length-2}
           next={this.fetchMoreData}
           hasMore={this.state.articles.length !== this.state.totalResults}
           loader={<LoadingSpinner type="main"/>}
         >
           <div
-              className="d-flex flex-wrap justify-content-between"
+              className="d-flex flex-wrap "
               id="news_Container"
               style={{
                 marginTop: "20px",
@@ -71,7 +75,7 @@ export default class News extends Component {
           {
             this.state.articles.map((element) => {
               return (
-                <div key={element.url} style={{maxWidth: "32%"}}>
+                <div key={element.url} style={{maxWidth: "33.33%", padding: "15px"}}>
                   <CategoryPageItem
                     title={element.title}
                     description={element.description}
