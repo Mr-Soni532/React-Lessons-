@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 // import DropdownBtn from "./DropdownBtn";
 import {LinkContainer} from 'react-router-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
-export default class NavBar extends Component {
-  render() {
+export default function NavBar() {
+  
     return ( 
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
@@ -31,4 +31,5 @@ export default class NavBar extends Component {
       </Navbar> 
     );
   }
-}
+
+
