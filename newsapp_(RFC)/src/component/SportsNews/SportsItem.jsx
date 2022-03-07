@@ -1,13 +1,10 @@
-import "./SideNewsPannel.css";
-import "./Webkit.css";
-import React, { Component } from "react";
-import defaultImg from "../assets/defaultImg.png";
+import "../SideNewsPannel.css";
+import "../Webkit.css";
+import React from "react";
+import defaultImg from "../../assets/defaultImg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {  } from "react-bootstrap";
 
-export default class SportsItem extends Component {
-  render() {
-    let { title, imageUrl, newsUrl } = this.props;
+export default function SportsItem({ title, imageUrl, newsUrl }) {
     return (
       <>
         <a className="item-container" href={newsUrl}>
@@ -21,5 +18,5 @@ export default class SportsItem extends Component {
       </>
     );
   }
-}
+
 

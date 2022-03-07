@@ -1,10 +1,10 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
-import React from 'react'
-import News from "./News";
-import Sports from "./Sports";
-import Health from "./Health";
+import React from 'react';
+import News from "./Headline_News/News";
+import Sports from "./SportsNews/Sports";
+import Health from "./HealthNews/Health";
 
 export default function Home({country, apiKey, setProgress}) {
     return (

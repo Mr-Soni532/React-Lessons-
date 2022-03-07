@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component"; // install - npm i react-infinite-scroll-component
 import "bootstrap/dist/css/bootstrap.min.css";                // install - npm install react-bootstrap bootstrap@5.1.3
-import { Row,  } from "react-bootstrap";
+import { Row  } from "react-bootstrap";
 import NewsItem from "./NewsItem";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function News(props) {
   const [articles, setArticles] = useState([])
@@ -41,7 +41,7 @@ export default function News(props) {
     setTotalResults(parsedData.totalResults)
     setLoading(false)
   };
-
+ 
     return (
       <>
         <Row style={{ borderBottom: "2px solid rgba(0,0,0,0.3)", marginLeft: "1.8px", marginTop: "30px" }}>

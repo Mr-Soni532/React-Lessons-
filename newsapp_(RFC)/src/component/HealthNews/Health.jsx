@@ -1,27 +1,27 @@
-import React, { Component } from "react";
+import React, {  useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row } from "react-bootstrap";
 import HealthItems from "./HealthItem";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../LoadingSpinner";
 
 
-export default class Sports extends Component {
-  constructor() {
-    super();
-    this.state = {
-      articles: this.articles,
-      loading: true,
-    };
-  }
+export default function Health(props) {
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=business&apiKey=${this.props.apiKey}`;
+
+  const updateNews = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=business&apiKey=${props.apiKey}`;
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles, loading: false });
+    setArticles(parsedData.articles)
+    setLoading(false)
   }
 
-  render() {
+  useEffect(() => {
+    updateNews();
+   }, [])
+   
     return (
       <>
         <Row style={{ marginTop: "50px" }}>
@@ -36,10 +36,10 @@ export default class Sports extends Component {
             maxHeight: "600px",
           }}
         >
-          {this.state.loading ? (
+          {loading ? (
             <LoadingSpinner type="side" />
           ) : (
-            this.state.articles.map((element) => {
+            articles.map((element) => {
               return (
                 <div key={element.url}>
                   <HealthItems
@@ -56,4 +56,5 @@ export default class Sports extends Component {
       </>
     );
   }
-}
+
+

@@ -1,12 +1,9 @@
-import React, { Component } from "react";
-import defaultImg from "../assets/defaultImg.png";
+import React from "react";
+import defaultImg from "../../assets/defaultImg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Button, Badge } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
-export default class NewsItem extends Component {
-  render() {
-    let { title, description, imageUrl, newsUrl,  date } = this.props;
-    
+export default function CategoryPageItems({ title, description, imageUrl, newsUrl,  date }) {
     return (
       <>  
         <Card style={{ width: "100%" }} className="mx-auto my-3">
@@ -20,7 +17,6 @@ export default class NewsItem extends Component {
               <small className=" fs-6 text-muted">
           <span className="text-dark ">{new Date(date).toGMTString()}</span>
               </small>
-      
               <Button variant="secondary" href={newsUrl} className="float-end ">
                 Read More
               </Button>
@@ -30,4 +26,4 @@ export default class NewsItem extends Component {
       </>
     );
   }
-}
+

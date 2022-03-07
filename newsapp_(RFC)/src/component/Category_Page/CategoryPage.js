@@ -1,67 +1,65 @@
 
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component"; 
 import "bootstrap/dist/css/bootstrap.min.css";  
 import { Row, Container } from "react-bootstrap";
 import CategoryPageItem from "./CategoryPageItems";
-import LoadingSpinner from "./LoadingSpinner"; 
-export default class News extends Component {
+import LoadingSpinner from "../LoadingSpinner"; 
 
-  constructor() {
-    super();  
-    this.state = {
-      articles: this.articles,
-      loading: true,
-      page: (this.page = 1),
-      totalResults: this.totalResults,
-    };
-  }
+export default function CategoryPage(props) {
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [totalResults, setTotalResults] = useState(0)
 
-  async updateNews(){
-    this.props.setProgress(20);
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=12&page=
-    ${this.state.page}`;
-    this.setState({loading: true})
+  const updateNews = async () =>{
+    props.setProgress(10);
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&pageSize=12&page=
+    ${page}`;
+    props.setProgress(25);
+    setLoading(true)
     let data = await fetch(url);
-    this.props.setProgress(40);
+    props.setProgress(40);
     let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false  });
-    this.props.setProgress(100);
+    props.setProgress(70);
+    setArticles(parsedData.articles)
+    setTotalResults(parsedData.totalResults)
+    setLoading(false)
+    props.setProgress(100);
   }
 
-  async componentDidMount() {
-    this.updateNews();
+  useEffect(() => {
+    updateNews();
+   }, [])
 
-  }
-
-  fetchMoreData = async () => {
-    this.setState({ page: this.state.page + 1 });
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=12&page=
-    ${this.state.page}`;
+    const fetchMoreData = async () => {
+      setPage(page+1)
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&pageSize=12&page=
+    ${page}`;
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articles: this.state.articles.concat(parsedData.articles), totalResults: parsedData.totalResults, loading: false  });
-  };
-
-  render() {
+    setArticles(articles.concat(parsedData.articles))
+    setTotalResults(parsedData.totalResults)
+    setLoading(false)
     
+  };
     return (
       <Container>
          <Row style={{ borderBottom: "2px solid rgba(0,0,0,0.3)", marginLeft: "1.8px", marginTop: "30px" }}>
           <h1 className="d-flex align-items-center p-0 pb-2" style={{fontWeight: "600"}}>
             News<span className="text-muted">@</span>Hub {" "}
             <span className="badge bg-primary" style={{fontSize: "20px", margin: " 0 10px", letterSpacing: "1.3px", fontWeight: "600"}}>
-              {this.props.category.toUpperCase()}
+              {props.category.toUpperCase()}
             </span>
           </h1>
         </Row>
 
-        {!this.state.loading ?
+        {!loading ?
           ( 
             <InfiniteScroll
-          dataLength={this.state.articles.length-2}
-          next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          dataLength={articles.length-2}
+          next={fetchMoreData}
+          hasMore={articles.length !== totalResults}
           loader={<LoadingSpinner type="main"/>}
         >
           <div
@@ -73,7 +71,7 @@ export default class News extends Component {
               }}
             >
           {
-            this.state.articles.map((element) => {
+            articles.map((element) => {
               return (
                 <div key={element.url} style={{maxWidth: "33.33%", padding: "15px"}}>
                   <CategoryPageItem
@@ -94,4 +92,7 @@ export default class News extends Component {
       </Container>
     );
   }
-}
+
+
+
+ 
