@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs"); //! npm i bcryptjs
 const jwt = require("jsonwebtoken"); //! npm i jsonwebtoken
-const fetchuser = require("../middleware/fetchuser");
+const fetchuser = require("../middleware/fetchuser"); //! Middleware
 const { body, validationResult } = require("express-validator"); //!npm install --save express-validator
 const router = express.Router();
 const JWT_SECRET = "bhup&nder$oniS@DevlOper|"; // signature token
@@ -18,8 +18,8 @@ router.post(
 
     // Boiler code from express validation
     async (req, res) => {
-        const errors = validationResult(req);
         //For errors
+        const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
