@@ -11,7 +11,7 @@ app.use(express.json()) //! Middleware
 
 // Availabel Routes
 app.use('/api/auth', require('./routes/auth'))
-app.use('/api/note', require('./routes/notes'))
+app.use('/api/note', require('./routes/note'))
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)

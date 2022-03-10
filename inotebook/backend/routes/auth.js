@@ -7,7 +7,7 @@ const { body, validationResult } = require("express-validator"); //!npm install 
 const router = express.Router();
 const JWT_SECRET = "bhup&nder$oniS@DevlOper|"; // signature token
 
-//! Create a User using: POST "/api/auth/createuser". Doesnt require Auth
+//! Route 1: Create a User using: POST "/api/auth/createuser". Doesnt require Auth
 router.post(
     "/createuser",
     [
@@ -24,7 +24,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        //! Route 1:  using try catch for error handling
+        // using try catch for error handling
         try {
 
             // confirm that user does exsists or not

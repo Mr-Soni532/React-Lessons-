@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router() // Module
 const Note = require("../models/Note");
 const fetchuser = require("../middleware/fetchuser");
 const { body, validationResult } = require("express-validator"); //!npm install --save express-validator
@@ -46,24 +46,53 @@ router.post('/addnote', fetchuser, [
 
 router.put('/updatenote/:id', fetchuser, async (req, res) => {
     const { title, description, tag } = req.body;
+    try {
+        // Create new note object 
+        const newNote = {};
+        if (title) { newNote.title = title };
+        if (description) { newNote.description = description };
+        if (tag) { newNote.tag = tag };
+
+        // Authenticate the valid user 
+        let note = await Note.findById(req.params.id)
+        if (!note) {
+            return res.status(400).send('Item Not Found')
+        }
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).send(" Access denied")
+        }
+
+        note = await Note.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
+        res.json({ note })
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Something went wrong!");
+    }
+
+})
+//! Route 4: Delete Note using : DELETE "/api/note/deletenote". Login required
+
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     // Create new note object 
-    const newNote = {};
-    if (title) { newNote.title = title };
-    if (title) { newNote.description = description };
-    if (title) { newNote.tag = tag };
+    try {
+        // find the note to be deleted and delete it.
+        let note = await Note.findById(req.params.id)
+        if (!note) {
+            return res.status(400).send('Item Not Found')
+        }
 
-    // Authenticate the valid user 
-    let note = await Note.findById(req.params.id) 
-    if (!note) {
-        return res.status(400).send('Item Not Found')
+        //Allow deletion only to valid user
+        if (note.user.toString() !== req.user.id) {
+            return res.status(401).send(" Access denied")
+        }
+
+        res.json({ "Success": `Note "${note.title}" has been deleted successfully` })
+        note = await Note.findByIdAndDelete(req.params.id)
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Something went wrong!");
     }
-    if(note.user.toString() !== req.user.id){
-        return res.status(401).send(" Access denied")
-    }
-
-    note = await Note.findByIdAndUpdate(req.params.id, {$set: newNote}, {new: true})
-    res.json({note})
-
 
 })
 module.exports = router
