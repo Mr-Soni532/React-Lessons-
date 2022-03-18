@@ -14,5 +14,5 @@ app.use('/api/auth', require('./routes/auth'))
 app.use('/api/note', require('./routes/note'))
 
 app.listen(port, () => {
-    console.log(`app listening on port ${port}`)
+    console.log(`iNotebook backend @ port ${port}`)
 })
