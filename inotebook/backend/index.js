@@ -1,11 +1,12 @@
 // Boiler code from expressjs.com/starter/installing.html
-
-const connectTOMongo = require('./db');
 const express = require('express');
+const connectTOMongo = require('./db');
+var cors = require('cors')
 
 connectTOMongo();
 const app = express()
 const port = 5000  // can be custom
+app.use(cors())
 
 app.use(express.json()) //! Middleware
 
