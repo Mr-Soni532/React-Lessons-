@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Form, Button, Col, Row } from 'react-bootstrap'
 import NoteContext from "../notes/NoteContext"
 
-export default function AddNote() {
+export default function AddNote({showAlert}) {
     //! ----| Fetching Context |
     const context = useContext(NoteContext);
     const { addNote } = context
@@ -14,6 +14,7 @@ export default function AddNote() {
     const handleClick = (e) => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag)
+        showAlert('Added successfully', 'success')
     }
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })

@@ -18,6 +18,7 @@ router.post(
 
     // Boiler code from express validation
     async (req, res) => {
+        let success = false;
         //For errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -30,7 +31,8 @@ router.post(
             // confirm that user does exsists or not
             let user = await User.findOne({ email: req.body.email });
             if (user) {
-                return res.status(400).json({ error: "Ops! User Already exsists" });
+                success = false;
+                return res.status(400).json({ success, error: "Ops! User Already exsists" });
             }
 
             // Encoding password with hashing and salt
@@ -52,7 +54,8 @@ router.post(
 
             // using token to identify user by givin a signature token to user
             const authToken = jwt.sign(data, JWT_SECRET);  //? (object cred, signature)
-            res.json(authToken);
+            success = true;
+            res.json({success, authToken});
         } catch (error) {
             console.error(error.message);
             res.status(500).send("Something went wrong!");
@@ -68,6 +71,7 @@ router.post("/login",
     ],
     async (req, res) => {
         const errors = validationResult(req);
+        let success = false;
         //For errors
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -77,11 +81,13 @@ router.post("/login",
         try {
             const user = await User.findOne({ email });
             if (!user) {
+                success = false;
                 return res.status(400).json({ error: "Input valid credentials" });
             }
             const passwordCompare = await bcrypt.compare(password, user.password);
             if (!passwordCompare) {
-                return res.status(400).json({ error: "Input valid credentials" });
+                success = false;
+                return res.status(400).json({ success, error: "Input valid credentials" });
             }
 
             const data = {
@@ -91,11 +97,12 @@ router.post("/login",
             };
 
             const authToken = jwt.sign(data, JWT_SECRET);
-            res.json(authToken);
+            success = true;
+            res.json({success, authToken});
 
         } catch (error) {
             console.error(error.message);
-            res.status(500).send("Something went wrong!");
+            res.status(500).send("Something went wrong - 102!");
         }
     }
 );
@@ -109,7 +116,7 @@ router.post("/getuser", fetchuser, async (req, res) => {
         res.json(user); //response
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Something went wrong!");
+        res.status(500).send("Something went wrong in line 116!");
     }
 });
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 import { Card, Button } from 'react-bootstrap';
-export const NoteItem = ({ note, updateNote }) => {
+export const NoteItem = ({ note, updateNote, showAlert }) => {
     const context = useContext(NoteContext);
     const { deleteNote } = context
     return (

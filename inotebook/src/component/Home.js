@@ -1,12 +1,12 @@
 import React from 'react'
 import Notes from './Notes'
 import { Container, Row } from 'react-bootstrap'
-export const Home = () => {
+export const Home = ({showAlert}) => {
 
     return (
         <Container>
             <Row>
-                <Notes />
+                <Notes showAlert={showAlert}/>
             </Row>
         </Container>
     )

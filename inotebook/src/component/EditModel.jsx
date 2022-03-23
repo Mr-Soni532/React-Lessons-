@@ -3,7 +3,9 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import NoteContext from "../notes/NoteContext"
 
 
-export default function EditModel({ modalShow, setModalShow, note, setNote }) {
+export default function EditModel({ modalShow, setModalShow, note, setNote, showAlert }) {
+
+  
     //!   fetching context
     const context = useContext(NoteContext);
     const {  editNote } = context;
@@ -12,6 +14,7 @@ export default function EditModel({ modalShow, setModalShow, note, setNote }) {
         e.preventDefault();
         editNote(note.id, note.editTitle, note.editDescription, note.editTag)
         setModalShow(false);
+        showAlert('Updated successfully', 'success')
     }
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })
